@@ -1,0 +1,40 @@
+# NOTICE — provenance and third-party licenses
+
+This repository is a driver-only extraction for the Xiaomi Mi 11 (`venus`)
+iOS bring-up. It combines original work with the following third-party components.
+
+## Base platform
+- **XNU** (`xnu-8796.121.2`) — Apple Public Source License 2.0. See `LICENSE`.
+- **hackios-xnu-kernel** platform layer (upstream:
+  `https://github.com/oosexgang/hackios-xnu-kernel`) — APSL 2.0. The `redwood_*`
+  and `venus_*` drivers here are original Mi 11 bring-up work layered on it.
+
+## Wi-Fi (`wifi/`)
+The Wi-Fi radio object `ath11k-vlmd.o` is built from:
+- **Linux `ath11k`** (Qualcomm WCN6750/QCA6490 driver), from a pinned Linux
+  release — **BSD-3-Clause-Clear** (the one `ath/` header it includes is ISC).
+  The driver files are used unmodified.
+- **FreeBSD LinuxKPI** headers (pinned FreeBSD release) — **BSD-2-Clause**,
+  patched via `wifi/lx-vlmd/patches/*.patch`.
+- **`wifi/lx-vlmd`** — original compatibility layer (headers + OS glue) written
+  for this port, on top of the kernel's `redwood_lx` bus.
+
+The `venus_lmd_*` kernel driver (MHI / QRTR / QMI / radio bring-up) is original
+work for this port.
+
+## Touch (`touch/`)
+- `redwood_focaltech_fw.h` is generated from the FocalTech touch-panel controller
+  firmware (`focaltech_ts_fw_m20.bin`). It is vendor firmware required by the
+  touch driver and contains no device identity.
+- The ST FTS protocol implementation (`redwood_venus_st_protocol.c`,
+  `redwood_st_touch.h`) was ported from ST's own FTS driver reference.
+
+## Bluetooth / Audio / Display / Battery
+Original bring-up work for this port. Bluetooth uses the phone's own controller
+firmware loaded at runtime (not included). Audio uses the CS35L41 amplifier and
+the SoC ADSP; display uses the Adreno GPU and the DPU. No third-party source is
+bundled for these beyond the XNU/IOKit base.
+
+## Sanitization note
+Compiled objects were stripped of debug information to remove build-host paths.
+No credentials, device identifiers, or firmware/calibration blobs are included.

@@ -1,0 +1,23 @@
+# Build / OS cruft
+*.tmp
+*.bak
+*.before-*
+*.orig
+*.rej
+.DS_Store
+Thumbs.db
+__pycache__/
+*.pyc
+
+# Never commit credentials or device identity
+private/
+*credential*
+*secret*
+*.pem
+*.key
+fw/
+firmware/
+*.bin
+*.img
+*.apfs
+*.dmg
