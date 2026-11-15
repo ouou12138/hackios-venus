@@ -19,8 +19,9 @@ The Wi-Fi radio object `ath11k-vlmd.o` is built from:
 - **`wifi/lx-vlmd`** — original compatibility layer (headers + OS glue) written
   for this port, on top of the kernel's `redwood_lx` bus.
 
-The `venus_lmd_*` kernel driver (MHI / QRTR / QMI / radio bring-up) is original
-work for this port.
+The `venus_lmd_*` kernel driver (MHI / QRTR / QMI / radio bring-up) is an
+independent port of the lemonade (OnePlus 9) QCA6490 board driver from
+`https://github.com/b1ackm4x/hackios-xnu-kernel`, adapted for the Mi 11.
 
 ## Touch (`touch/`)
 - `redwood_focaltech_fw.h` is generated from the FocalTech touch-panel controller
@@ -30,10 +31,12 @@ work for this port.
   `redwood_st_touch.h`) was ported from ST's own FTS driver reference.
 
 ## Bluetooth / Audio / Display / Battery
-Original bring-up work for this port. Bluetooth uses the phone's own controller
-firmware loaded at runtime (not included). Audio uses the CS35L41 amplifier and
-the SoC ADSP; display uses the Adreno GPU and the DPU. No third-party source is
-bundled for these beyond the XNU/IOKit base.
+Bluetooth is adapted from the lemonade reference in
+`https://github.com/b1ackm4x/hackios-xnu-kernel`; audio, display and battery are
+original Mi 11 bring-up work. Bluetooth uses the phone's own controller firmware
+loaded at runtime (not included). Audio uses the CS35L41 amplifier and the SoC
+ADSP; display uses the Adreno GPU and the DPU. No third-party source is bundled
+for these beyond the XNU/IOKit base.
 
 ## Sanitization note
 Compiled objects were stripped of debug information to remove build-host paths.

@@ -72,3 +72,20 @@ Wi‑Fi 射频对象用 `wifi/ath11k/mk-ath11k-vlmd.sh` 重新构建。
 
 基础 XNU/平台代码采用 Apple Public Source License 2.0（见 `LICENSE`）。第三方组件
 （Linux ath11k、FreeBSD LinuxKPI）保留各自许可，见 `NOTICE`。
+
+## 鸣谢
+
+本工作基于以下开源项目：
+
+- [hackios-xnu-kernel](https://github.com/oosexgang/hackios-xnu-kernel) — 驱动所
+  基于的 XNU 平台层。
+- [b1ackm4x/hackios-xnu-kernel](https://github.com/b1ackm4x/hackios-xnu-kernel) —
+  lemonade（OnePlus 9）QCA6490 参考驱动，Wi‑Fi（`venus_lmd`）与蓝牙移植自此。
+- [Apple XNU](https://github.com/apple-oss-distributions/xnu) — 驱动所面向的内核
+  （`xnu-8796.121.2`）。
+- [Linux 内核](https://github.com/torvalds/linux) — `ath11k` Wi‑Fi 驱动
+  （`drivers/net/wireless/ath/ath11k`），原样使用。
+- [FreeBSD](https://github.com/freebsd/freebsd-src) — 用于在 XNU 上编译 `ath11k`
+  的 LinuxKPI 兼容头。
+
+感谢这些项目的作者与维护者。

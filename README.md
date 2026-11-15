@@ -83,3 +83,21 @@ object is rebuilt with `wifi/ath11k/mk-ath11k-vlmd.sh`.
 Base XNU/platform code is under the Apple Public Source License 2.0 (`LICENSE`).
 Third-party components (Linux ath11k, FreeBSD LinuxKPI) retain their own licenses;
 see `NOTICE`.
+
+## Acknowledgments
+
+This work builds on the following open-source projects:
+
+- [hackios-xnu-kernel](https://github.com/oosexgang/hackios-xnu-kernel) — the XNU
+  platform layer the drivers are written against.
+- [b1ackm4x/hackios-xnu-kernel](https://github.com/b1ackm4x/hackios-xnu-kernel) —
+  the lemonade (OnePlus 9) QCA6490 reference driver from which the Wi‑Fi
+  (`venus_lmd`) and Bluetooth bring-up were ported.
+- [Apple XNU](https://github.com/apple-oss-distributions/xnu) — the kernel
+  (`xnu-8796.121.2`) these drivers target.
+- [Linux kernel](https://github.com/torvalds/linux) — the `ath11k` Wi‑Fi driver
+  (`drivers/net/wireless/ath/ath11k`), used unmodified.
+- [FreeBSD](https://github.com/freebsd/freebsd-src) — the LinuxKPI compatibility
+  headers used to compile `ath11k` for XNU.
+
+Thanks to the authors and maintainers of these projects.
