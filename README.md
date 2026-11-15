@@ -3,6 +3,8 @@
 Driver source and compiled artifacts for running iOS on the **Xiaomi Mi 11**
 (codename `venus`, Qualcomm SM8350 / Snapdragon 888, QCA6490 Wi‑Fi/BT).
 
+English | [简体中文](README.zh.md)
+
 This repository is a **driver-only extraction** from a larger XNU-based bring-up
 tree. Each completed hardware driver lives in its own folder with its source
 (`src/`) and its compiled arm64 Mach‑O object (`obj/`). A shared platform /
