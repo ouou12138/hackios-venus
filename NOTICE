@@ -41,3 +41,19 @@ for these beyond the XNU/IOKit base.
 ## Sanitization note
 Compiled objects were stripped of debug information to remove build-host paths.
 No credentials, device identifiers, or firmware/calibration blobs are included.
+
+## Standalone Metal (`metal/`)
+- RedwoodMetal, the AIR frontend/backend integration, Darwin DRM bridge, Mesa
+  patches and reference CA/concurrency tests are retained from the lemonade
+  reference repository at commit `020124fde2c5708ef63f03fffd996a19b5b7c8dc`
+  (`https://github.com/b1ackm4x/hackios-xnu-kernel`), based on the upstream HackiOS
+  platform. Its repository license is retained in
+  `metal/licenses/UPSTREAM-APSL-2.0.txt`; original per-file notices remain intact.
+- Venus adaptations include the runtime bundle discovery path, native desktop
+  probe, and the framebuffer queue/reader drain around the reference GPU gate.
+- Mesa 25.0.7 is fetched separately when building. Its existing per-file licenses
+  apply; upstream license documentation and license texts are retained under
+  `metal/licenses/Mesa/`. Source patches do not relicense upstream files.
+- No Apple shader library, SDK, complete runtime/kernel/payload, firmware or raw
+  research log is included. The two published kernel objects are relocatable,
+  stripped of debug information, and are alternatives to the display baseline.

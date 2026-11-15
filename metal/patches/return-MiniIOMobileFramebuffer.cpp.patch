@@ -1,0 +1,98 @@
+--- a/xnu/files/iokit/Kernel/MiniIOMobileFramebuffer.cpp
++++ b/xnu/files/iokit/Kernel/MiniIOMobileFramebuffer.cpp
+@@ -267,6 +267,7 @@
+ 	uint8_t         fSwap[SWAP_QUEUE][SWAP_SIZE];   /* the swaps on their way to the panel (fb_queue), from fSwapFirst on */
+ 	MiniIOSurface * fSwapSurfaces[SWAP_QUEUE][SWAP_LAYERS]; /* ... their surfaces, held from SwapEnd on: their maker may let go of them */
+ 	unsigned        fSwapFirst, fSwapsWaiting;
++	bool fReturnStopping, fPresenterReading;
+ 	/*
+ 	 * ... and not whenever the GPU happens to be done, but on a beat of the refresh rate
+ 	 * (boot-arg fb_beat=0: at once): frames then follow each other at an even pace whatever
+@@ -315,6 +316,7 @@
+ 	MiniIOSurface * defaultSurface(void);
+ 	uint32_t        fCompletedSwapID;
+ 	void present(const uint8_t * swap);
++	bool stopForReturn(void);
+ 	void show(const uint8_t * swap, MiniIOSurface ** surfaces);
+ 	void finishSwap(uint32_t swapID);
+ 	void presenter(void);
+@@ -334,6 +336,11 @@
+ };
+ 
+ OSDefineMetaClassAndStructors(IOMobileFramebuffer, IOService);
++static IOMobileFramebuffer * gReturnFramebuffer;
++extern "C" bool MiniIOMobileFramebufferStop(void)
++{
++	return !gReturnFramebuffer || gReturnFramebuffer->stopForReturn();
++}
+ 
+ static void
+ setNumber(OSDictionary * dict, const char * key, uint64_t value)
+@@ -803,6 +810,8 @@
+ 	}
+ 	fLock = IOLockAlloc();
+ 	fSwapLock = IOLockAlloc();
++	fReturnStopping = fPresenterReading = false;
++	gReturnFramebuffer = this;
+ 	if (kernel_thread_start(&IOMobileFramebuffer::presenterMain, this, &thread) != KERN_SUCCESS) {
+ 		IOLog("MiniIOMobileFramebuffer: no thread to put frames on the panel with\n");
+ 		return false;
+@@ -1275,6 +1284,23 @@
+ }
+ 
+ /* SwapEnd: the swap is handed to the thread that puts frames on the panel, as soon as that has no other waiting. */
++bool
++IOMobileFramebuffer::stopForReturn(void)
++{
++	AbsoluteTime deadline;
++	clock_interval_to_deadline(2000, kMillisecondScale, &deadline);
++	IOLockLock(fSwapLock);
++	fReturnStopping = true;
++	IOLockWakeup(fSwapLock, &fSwapsWaiting, false);
++	while ((fSwapsWaiting || fPresenterReading) && mach_absolute_time() < deadline)
++		IOLockSleepDeadline(fSwapLock, &fReturnStopping, deadline, THREAD_UNINT);
++	bool drained = !fSwapsWaiting && !fPresenterReading;
++	redwood_tl("MiniIOMobileFramebuffer: return drain completed=%u queued=%u reading=%u\n",
++	    drained, fSwapsWaiting, fPresenterReading);
++	IOLockUnlock(fSwapLock);
++	return drained;
++}
++
+ void
+ IOMobileFramebuffer::present(const uint8_t * swap)
+ {
+@@ -1290,6 +1316,7 @@
+ 		redwood_tl("tl: s %u at %llu\n", swapWord(swap, SWAP_ID), micros(now));
+ 	}
+ 	IOLockLock(fSwapLock);
++	while (fReturnStopping) IOLockSleep(fSwapLock, &fReturnStopping, THREAD_UNINT);
+ 	fStatSwapsLate += fSwapTime != 0 && now - fSwapTime > period && now - fSwapTime < pause;
+ 	fSwapTime = now;
+ 	fStatHeld += fSwapsWaiting >= swapQueue();
+@@ -1301,6 +1328,7 @@
+ 			return;
+ 		}
+ 	}
++	while (fReturnStopping) IOLockSleep(fSwapLock, &fReturnStopping, THREAD_UNINT);
+ 	unsigned slot = (fSwapFirst + fSwapsWaiting) % SWAP_QUEUE;
+ 
+ 	memcpy(fSwap[slot], swap, SWAP_SIZE);
+@@ -1343,6 +1371,7 @@
+ 		while (fSwapsWaiting == 0) {
+ 			IOLockSleep(fSwapLock, fSwap, THREAD_UNINT);
+ 		}
++		fPresenterReading = true;
+ 		memcpy(swap, fSwap[fSwapFirst], SWAP_SIZE);
+ 		memcpy(surfaces, fSwapSurfaces[fSwapFirst], sizeof(surfaces));
+ 		IOLockUnlock(fSwapLock);
+@@ -1353,6 +1382,10 @@
+ 			}
+ 		}
+ 		MiniIOSurfaceClearKept();               /* (the next frame is some milliseconds away) */
++		IOLockLock(fSwapLock);
++		fPresenterReading = false;
++		IOLockWakeup(fSwapLock, &fReturnStopping, false);
++		IOLockUnlock(fSwapLock);
+ 	}
+ }
+ 

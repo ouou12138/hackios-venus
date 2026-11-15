@@ -23,12 +23,16 @@ transport layer lives in `common/`, and kernel build scripts in `build/`.
 | `bluetooth/`  | QCA6490 Bluetooth (H4 / native iOS)   | Controller + BLE scan verified; pairing/audio pending |
 | `audio/`      | ADSP + CS35L41 speaker / mic          | Audible output verified (−24 dB cap) |
 | `display/`    | Adreno GPU + DPU / 120 Hz framebuffer | 120 Hz present verified |
+| `metal/`      | Standalone RedwoodMetal + AIR/Mesa and return-drain overlay | Independent desktop test: 33/33 checks; opt-in only |
 | `touch/`      | FocalTech / ST FTS touchscreen        | Touch input verified |
 | `brightness/` | Backlight persistence (userland)      | Persist across reboot verified |
 | `common/`     | Shared QMI / QRTR / ADSP / input / image layer | — |
 | `build/`      | XNU kernel build scripts              | — |
 
 Each folder has a `README.md` describing its files and how it fits the kernel.
+
+`metal/` is kept separately: its alternative GPU/framebuffer objects and runtime
+sources do not replace `display/` or change any default build/boot profile.
 
 ## Source provenance
 
@@ -91,8 +95,8 @@ This work builds on the following open-source projects:
 - [hackios-xnu-kernel](https://github.com/oosexgang/hackios-xnu-kernel) — the XNU
   platform layer the drivers are written against.
 - [b1ackm4x/hackios-xnu-kernel](https://github.com/b1ackm4x/hackios-xnu-kernel) —
-  the lemonade (OnePlus 9) QCA6490 reference driver from which the Wi‑Fi
-  (`venus_lmd`) and Bluetooth bring-up were ported.
+  the lemonade (OnePlus 9) QCA6490 and Adreno 660 reference from which Wi‑Fi
+  (`venus_lmd`), Bluetooth and the independent Metal path were ported.
 - [Apple XNU](https://github.com/apple-oss-distributions/xnu) — the kernel
   (`xnu-8796.121.2`) these drivers target.
 - [Linux kernel](https://github.com/torvalds/linux) — the `ath11k` Wi‑Fi driver

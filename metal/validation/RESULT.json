@@ -1,0 +1,40 @@
+{
+  "date": "2026-11-15",
+  "desktop_metal_verified": true,
+  "joint_acceptance_passed": true,
+  "defaults_unchanged": true,
+  "startup_checks_passed": 33,
+  "startup_checks_total": 33,
+  "ca_pixel_checks": 4,
+  "ca_pixel_failures": 0,
+  "ca_frames_per_check": 3,
+  "gpu_call_drain": true,
+  "display_queue_drain": true,
+  "dpu_completed_transfers": 2576,
+  "dpu_signature_changes": 1937,
+  "kernel_panic": false,
+  "backboardd_crash": false,
+  "max_battery_temperature_centiC": 3500,
+  "visual_acceptance": false,
+  "all_apps_or_120fps_verified": false,
+  "default_promoted": false,
+  "payload_sha256": "12c0f0b09927450ceda322adee7fae8440a63cf6e032728ed6b9e54681138f04",
+  "kernel_sha256": "40d2f89369c990a555795a20646677ba70ad05520776f3fe6a8d4614d79baf9c",
+  "runtime_sha256": "b088de207e5f17afd18885ab4439937396622182e6eff911fc607abf30a8f597",
+  "scope": "Independent desktop Metal acceptance; not enabled in the repository display baseline",
+  "payload_included": false,
+  "raw_logs_included": false,
+  "device_identifiers_included": false,
+  "initial_attempt": {
+    "passed": false,
+    "ca_pixel_tests_passed": true,
+    "backboardd_exit_sigsegv": true,
+    "settings_probe_entitlement_missing": true,
+    "fixed_in_final_candidate": true
+  },
+  "kernel_build": {
+    "compilation_and_link_completed": true,
+    "full_make_exit_code": 2,
+    "known_kpi_export_audit_failure": true
+  }
+}

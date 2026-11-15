@@ -1,0 +1,26 @@
+{
+  "passed": true,
+  "sanitizers": [
+    "AddressSanitizer",
+    "UndefinedBehaviorSanitizer"
+  ],
+  "gpu_gate_checks": [
+    "scope-exit active-call accounting",
+    "existing calls drain while new callers park",
+    "timeout retains active calls and closed admission",
+    "all four entry points guarded and shutdown ordering"
+  ],
+  "display_drain_checks": [
+    "queue and final reader both retire before completion",
+    "timeout retains surfaces and reader state",
+    "admission checked before and after capacity waits"
+  ],
+  "scripts": [
+    "tests/gpu-return.py",
+    "tests/display-drain.py"
+  ],
+  "tested_sources": [
+    "src/kernel/RedwoodGPU.cpp",
+    "src/kernel/MiniIOMobileFramebuffer.cpp"
+  ]
+}

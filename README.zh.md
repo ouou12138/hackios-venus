@@ -21,12 +21,16 @@
 | `bluetooth/` | QCA6490 蓝牙（H4 / 原生 iOS） | 控制器 + BLE 扫描已验证；配对/音频待验 |
 | `audio/` | ADSP + CS35L41 扬声器 / 麦克风 | 物理出声已验证（−24 dB 上限） |
 | `display/` | Adreno GPU + DPU / 120 Hz 帧缓冲 | 120 Hz 呈现 已验证 |
+| `metal/` | 独立 RedwoodMetal + AIR/Mesa 与退出排空实验模块 | 桌面独立验收33/33；仅显式接入 |
 | `touch/` | FocalTech / ST FTS 触摸屏 | 触控输入已验证 |
 | `brightness/` | 背光持久化（用户态） | 跨重启恢复已验证 |
 | `common/` | 共享 QMI / QRTR / ADSP / input / image 层 | — |
 | `build/` | XNU 内核构建脚本 | — |
 
 每个文件夹内都有 `README.md`，说明其文件构成及如何接入内核。
+
+`metal/` 先单独保存：其中 GPU/Framebuffer 是替代版本，不覆盖 `display/`，不自动修改现有
+构建或默认启动配置。原生桌面、CA 像素和退出恢复已有限验收；视觉、长期及全应用120 FPS待验。
 
 ## 源码来源
 
@@ -80,7 +84,7 @@ Wi‑Fi 射频对象用 `wifi/ath11k/mk-ath11k-vlmd.sh` 重新构建。
 - [hackios-xnu-kernel](https://github.com/oosexgang/hackios-xnu-kernel) — 驱动所
   基于的 XNU 平台层。
 - [b1ackm4x/hackios-xnu-kernel](https://github.com/b1ackm4x/hackios-xnu-kernel) —
-  lemonade（OnePlus 9）QCA6490 参考驱动，Wi‑Fi（`venus_lmd`）与蓝牙移植自此。
+  lemonade（OnePlus 9）QCA6490 / Adreno 660 参考实现，Wi‑Fi（`venus_lmd`）、蓝牙和独立Metal路径移植自此。
 - [Apple XNU](https://github.com/apple-oss-distributions/xnu) — 驱动所面向的内核
   （`xnu-8796.121.2`）。
 - [Linux 内核](https://github.com/torvalds/linux) — `ath11k` Wi‑Fi 驱动

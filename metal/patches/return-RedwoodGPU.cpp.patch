@@ -1,0 +1,115 @@
+--- a/xnu/files/iokit/Kernel/RedwoodGPU.cpp
++++ b/xnu/files/iokit/Kernel/RedwoodGPU.cpp
+@@ -71,6 +71,7 @@
+ 
+ void RedwoodGPUStart(void);
+ void RedwoodGPUStop(void);
++bool MiniIOMobileFramebufferStop(void);
+ void MiniIOMobileFramebufferShow(const uint8_t * pixels, uint32_t width, uint32_t height, uint32_t rowBytes);
+ }
+ 
+@@ -205,6 +206,51 @@
+ #define GPU_PUSH_AGAIN_MS       4               /* a surface is pushed out of the cache again for a submission this long after the last */
+ 
+ static IOLock * gGPULock;                       /* around everything that is the GPU's (redwood_gpu_...) */
++/* A return-to-loader is terminal for this kernel. Close user-call admission and
++ * finish every admitted method before switching off hardware. Later callers
++ * sleep until the kernel ends instead of receiving allocation failures while
++ * Mesa is still rendering. Internal fence waits remain available to the display.
++ * This lock is never held while taking gGPULock or waiting for GPU completion. */
++static IOLock * gGPUCallLock;
++static bool gGPUCallsStopping;
++static uint32_t gGPUCallsActive, gGPUCallsParked;
++class GPUUserCall {
++public:
++	GPUUserCall() {
++		IOLockLock(gGPUCallLock);
++		if (gGPUCallsStopping) {
++			gGPUCallsParked++;
++		}
++		while (gGPUCallsStopping) IOLockSleep(gGPUCallLock, &gGPUCallsStopping, THREAD_UNINT);
++		gGPUCallsActive++;
++		IOLockUnlock(gGPUCallLock);
++	}
++	~GPUUserCall() {
++		IOLockLock(gGPUCallLock);
++		gGPUCallsActive--;
++		if (!gGPUCallsActive) IOLockWakeup(gGPUCallLock, &gGPUCallsActive, false);
++		IOLockUnlock(gGPUCallLock);
++	}
++private:
++	GPUUserCall(const GPUUserCall &);
++	GPUUserCall & operator=(const GPUUserCall &);
++};
++
++static bool
++gpuDrainUserCalls(void)
++{
++	AbsoluteTime deadline;
++	clock_interval_to_deadline(2000, kMillisecondScale, &deadline);
++	IOLockLock(gGPUCallLock);
++	gGPUCallsStopping = true;
++	while (gGPUCallsActive && mach_absolute_time() < deadline)
++		IOLockSleepDeadline(gGPUCallLock, &gGPUCallsActive, deadline, THREAD_UNINT);
++	bool drained = !gGPUCallsActive;
++	redwood_tl("RedwoodGPU: return calls drained=%u active=%u parked=%u\n",
++	    drained, gGPUCallsActive, gGPUCallsParked);
++	IOLockUnlock(gGPUCallLock);
++	return drained;
++}
+ static bool gGPUReported;
+ static bool gGPUCached;                         /* boot-arg gpu_cached=1 */
+ static bool gGPUSaidSetIova;                    /* MSM_INFO_SET_IOVA has been refused out loud once */
+@@ -424,6 +470,7 @@
+ 
+ 	gGPUCached = PE_parse_boot_argn("gpu_cached", &cached, sizeof(cached)) && cached != 0;
+ 	gGPULock = IOLockAlloc();
++	gGPUCallLock = IOLockAlloc();
+ 	gpu = OSTypeAlloc(RedwoodGPU);
+ 	if (gpu == NULL || provider == NULL || !gpu->init() || !gpu->attach(provider)) {
+ 		OSSafeReleaseNULL(gpu);
+@@ -441,6 +488,12 @@
+ void
+ RedwoodGPUStop(void)
+ {
++	if (!gpuDrainUserCalls()) {
++		redwood_tl("RedwoodGPU: return calls timed out; hardware retained until final quiesce\n");
++		return;
++	}
++	if (!MiniIOMobileFramebufferStop())
++		redwood_tl("MiniIOMobileFramebuffer: return drain timed out; sources retained\n");
+ 	IOLockLock(gGPULock);
+ 	redwood_gpu_stop();
+ 	IOLockUnlock(gGPULock);
+@@ -554,6 +607,7 @@
+ bool
+ RedwoodGPUUserClient::start(IOService * provider)
+ {
++	GPUUserCall call;
+ 	if (!redwood_gpu_ready() || !IOUserClient::start(provider)) {
+ 		return false;
+ 	}
+@@ -645,6 +699,7 @@
+ IOReturn
+ RedwoodGPUUserClient::clientClose(void)
+ {
++	GPUUserCall call;
+ 	if (fBuffers != NULL) {
+ 		IOLockLock(gGPULock);
+ 		/* what the client had the GPU do last may still be going on, in these buffers */
+@@ -1261,6 +1316,7 @@
+ IOReturn
+ RedwoodGPUUserClient::clientMemoryForType(UInt32 type, IOOptionBits * options, IOMemoryDescriptor ** memory)
+ {
++	GPUUserCall call;
+ 	struct gpu_buffer * b;
+ 	IOReturn ret = kIOReturnBadArgument;
+ 
+@@ -1281,6 +1337,7 @@
+ RedwoodGPUUserClient::externalMethod(uint32_t selector, IOExternalMethodArguments * args,
+     IOExternalMethodDispatch * dispatch, OSObject * target, void * reference)
+ {
++	GPUUserCall call;
+ 	union {
+ 		struct msm_param param;
+ 		struct msm_gem_new gemNew;

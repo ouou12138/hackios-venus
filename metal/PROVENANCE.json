@@ -1,0 +1,241 @@
+{
+  "reference_repository": "https://github.com/b1ackm4x/hackios-xnu-kernel",
+  "reference_commit": "020124fde2c5708ef63f03fffd996a19b5b7c8dc",
+  "mesa_version": "25.0.7",
+  "mesa_archive_sha256": "592272df3cf01e85e7db300c449df5061092574d099da275d19e97ef0510f8a6",
+  "text_export": "CRLF normalized to LF; no functional source changes",
+  "files": {
+    "src/kernel/RedwoodGPU.cpp": {
+      "source": "research/metal-desktop/src/return-xnu_files-RedwoodGPU.cpp",
+      "source_sha256": "fd48ab5f9195c64bfa2d76b04e905bcddb2347f2220e996198018961e438c048",
+      "export_sha256": "fd48ab5f9195c64bfa2d76b04e905bcddb2347f2220e996198018961e438c048"
+    },
+    "src/kernel/MiniIOMobileFramebuffer.cpp": {
+      "source": "research/metal-desktop/src/return-xnu_files-MiniIOMobileFramebuffer.cpp",
+      "source_sha256": "e43d44892bd184be13a935b28ed9df64f08d9222feecd6c6581459c05e570e5b",
+      "export_sha256": "e43d44892bd184be13a935b28ed9df64f08d9222feecd6c6581459c05e570e5b"
+    },
+    "src/userland/redwoodmetal.m": {
+      "source": "repos/hackios-lemonade/userland/src/redwoodmetal.m",
+      "source_sha256": "f013c1f7e71705c67b161bce83591ad93241657aa2af188269e74cf02c1775ac",
+      "export_sha256": "c56cf7cf54c33cba16e9e801cb8d5e632cc75470efa6d13325b5099cac3951df"
+    },
+    "src/userland/redwooddrawable.m": {
+      "source": "repos/hackios-lemonade/userland/src/redwooddrawable.m",
+      "source_sha256": "7c86669f094a53013a9460c1b44bcc5142c80d5302e057a82c1c8e7e8e60c70f",
+      "export_sha256": "0a994aff638ec66e775d74cc54613665adab63a28b3aebcba43c4a93dc08fcec"
+    },
+    "src/userland/redwood_drawable.h": {
+      "source": "repos/hackios-lemonade/userland/src/redwood_drawable.h",
+      "source_sha256": "361ea8484032c5a4de9f955b43af3f6448f3c06e2b6af63be5590fa81a20379b",
+      "export_sha256": "7f66f2e1ac01a40c1d612ff0b746c94c8ba12b797666ed5c3347d3379a17998d"
+    },
+    "src/userland/metal_plugin.plist": {
+      "source": "repos/hackios-lemonade/userland/src/metal_plugin.plist",
+      "source_sha256": "ec59feb23a01ce22013a8f3457b8aa8e8aaf47831f3f952b06b5bc6ea85895e9",
+      "export_sha256": "96f6896e6e1137cb92ffd735bc58ee87a5be1de06c2fb414f8bd75eb0e930d3d"
+    },
+    "src/userland/metal-enable.c": {
+      "source": "research/metal-desktop/src/metal-enable.c",
+      "source_sha256": "90d1a2fd6d2f5fc661802c47177b08a36e7d3856e51b5c031415ada627785d06",
+      "export_sha256": "90d1a2fd6d2f5fc661802c47177b08a36e7d3856e51b5c031415ada627785d06"
+    },
+    "patches/metal-enable.diff": {
+      "source": "research/metal-desktop/src/metal-enable.diff",
+      "source_sha256": "7bd5e96401c91df766a55ab34c5f9b79f30ad7d7de3cf8e957b3d083ee0bac62",
+      "export_sha256": "7bd5e96401c91df766a55ab34c5f9b79f30ad7d7de3cf8e957b3d083ee0bac62"
+    },
+    "tests/desktop-probe.m": {
+      "source": "research/metal-desktop/src/venus-metal-desktop-probe.m",
+      "source_sha256": "6f14f8a48294e04b8436dfcfc36b8b3871dca0fa52579b2667e64edee65a1cbd",
+      "export_sha256": "6f14f8a48294e04b8436dfcfc36b8b3871dca0fa52579b2667e64edee65a1cbd"
+    },
+    "tests/lemonade_metal_ca.m": {
+      "source": "research/metal-desktop/src/lemonade_metal_ca.m",
+      "source_sha256": "e651827488b86176f67d4b53285b89de2be68384ba19bf41a9a8e683a578b9e9",
+      "export_sha256": "cac84855c31a1c75f9ce59ee5f9365bb67234a37d3ca15d7a99245ce605dde83"
+    },
+    "tests/probe.entitlements": {
+      "source": "research/metal-desktop/src/probe.entitlements",
+      "source_sha256": "91c90d94079e9e48625c0a82ad278cb51e363642cad72d4f546d0b787d40344d",
+      "export_sha256": "91c90d94079e9e48625c0a82ad278cb51e363642cad72d4f546d0b787d40344d"
+    },
+    "tests/venus-metal-test.m": {
+      "source": "research/metal-port/src/venus-metal-test.m",
+      "source_sha256": "a6d88b70f36cf155788d7b92164df0fd975e87062bfe994b14ca9ba6028d2660",
+      "export_sha256": "a6d88b70f36cf155788d7b92164df0fd975e87062bfe994b14ca9ba6028d2660"
+    },
+    "tests/venus_compute.ll": {
+      "source": "research/metal-port/src/venus_compute.ll",
+      "source_sha256": "a9f0f84f35b608d494185896ea37cad277c466d06dd572906f2162b3d69f49bd",
+      "export_sha256": "a9f0f84f35b608d494185896ea37cad277c466d06dd572906f2162b3d69f49bd"
+    },
+    "tests/lemonade_metal_raster.m": {
+      "source": "repos/hackios-lemonade/userland/src/lemonade_metal_raster.m",
+      "source_sha256": "b16fa8e7c28497f79127f46d5b7463a01273a6185879f366659d4e39871ef32d",
+      "export_sha256": "b9a88638567bc4d81bfb13c762d66a9080708155c1d95f086996ea67a68b9cb4"
+    },
+    "backend/mesa/air-frontend.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/air-frontend.patch",
+      "source_sha256": "114853ce6935f4f72544762fd7b8c8234ff1b8c5e8c180b52c8537dcacf1e4c5",
+      "export_sha256": "c29e06eb539b713b8bc5340e37a49d3e39fb16426da79043ec2b49fd3953737a"
+    },
+    "backend/mesa/air-ir3.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/air-ir3.patch",
+      "source_sha256": "c24b45adad7949f67e96d0da8778c75c54391cf6a0eb5b34f0bd38b0606b6ba7",
+      "export_sha256": "ce474060257c128199f9dc87a62ca40efc6ab7cc1089273c6bd59ccb7cbae86f"
+    },
+    "backend/mesa/air-metal.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/air-metal.patch",
+      "source_sha256": "7a241c243b1602c4d212413ad3712ea0d2b8738b96ed840ad2305a9b163f251c",
+      "export_sha256": "39d88efb499c7ae9451611ca668e8e87568eaf84c95cfbfcbe2a3f95afcf7f5a"
+    },
+    "backend/mesa/freedreno-buffer-flags.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/freedreno-buffer-flags.patch",
+      "source_sha256": "af2630a78dd0ac29c0f158ea8e733caecec4843dfeca7013eb3c79739373f05f",
+      "export_sha256": "28bfefaf2ecf0e0bcc7df245cadc29698573a949fc2f674fa7153174101190e4"
+    },
+    "backend/mesa/freedreno-darwin.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/freedreno-darwin.patch",
+      "source_sha256": "08300ae82004edb1ee079607584aa318853ddf220ac347b9cb50181dbe3c5862",
+      "export_sha256": "16edbe15d0e263e644e3cf955fdfd497f153495a61d040b734780dfec1ec6ad2"
+    },
+    "backend/mesa/ir3-round-default.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/ir3-round-default.patch",
+      "source_sha256": "a4a3ad8a3fe956aa34d57b5c270d836d36f3999676ca40b020c9f6f0eea42bc2",
+      "export_sha256": "2065de1cb4fc0fcc5f9a8fee214b6a5112ea6182f983f192e0c235980879bb8e"
+    },
+    "backend/mesa/ir3-shift-split.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/ir3-shift-split.patch",
+      "source_sha256": "0aa4aec00df47e35b427b808dfdb156636d7406e4fc7c001edb54cfea0f4cb19",
+      "export_sha256": "26ca6b1e512ca3a43bb2d1cab3942d247f914e5a1fa34432462ab93d33c369ef"
+    },
+    "backend/mesa/ir3-ssbo-subdword.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/ir3-ssbo-subdword.patch",
+      "source_sha256": "543586572b797fd77510a5c45d69af3d3e85b69e7e1e5465489e2e106343f1d5",
+      "export_sha256": "a545a0cdfec12b604ae0acca7d7b5b4b8c7f5789029ba3e82eeebbd40414624a"
+    },
+    "backend/mesa/osmesa-es-profile.patch": {
+      "source": "repos/hackios-lemonade/tools/mesa/osmesa-es-profile.patch",
+      "source_sha256": "8808c5e9ad66b706e5c84c834af5fe64d90d1e2db5a16542bff8f372389e19d6",
+      "export_sha256": "9ca1cbbd0becbc1bc57a5cd616d60b8a53e3e42f4208241b34bded686bcfb0bd"
+    },
+    "backend/mesa/air/air2nir.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air2nir.c",
+      "source_sha256": "7ba1f0fa2d73ff28bbe43d95941e80ada0fb347950b56bccb294dda12e54a0ea",
+      "export_sha256": "e00a7b632731e7c8516a2a7e8f011b7fe576660d2c2b9f6595978741610018c0"
+    },
+    "backend/mesa/air/air_bitcode.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_bitcode.c",
+      "source_sha256": "1093a56e65d328268f0643425d737a85be6700389dd424f0c146fb9f1054d323",
+      "export_sha256": "ca969c530025038e7370c4291ea3cb47ba770c638f238c58b4f81eb78251033b"
+    },
+    "backend/mesa/air/air_bitcode.h": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_bitcode.h",
+      "source_sha256": "f5f8249cad75e1424a306b93d2a884e04975564e8319bdb659e4df7abab8b6cb",
+      "export_sha256": "0b13de6db8417b1fa45f140a3bc454e92d693721a9d190d821f1d282caf02fa5"
+    },
+    "backend/mesa/air/air_intrinsics.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_intrinsics.c",
+      "source_sha256": "21b430096ce44d32abc8cb394692d89e455c57375dea74f2fbc7bca85d3c4a73",
+      "export_sha256": "f5f06bfa01f100acb044bde9c6ea58149a889484505ed308a3a9cc511eb23910"
+    },
+    "backend/mesa/air/air_layout.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_layout.c",
+      "source_sha256": "f831e70dd4c71cccd4f130509e3fe0f3db8aa77861270fb08705675a50fdb3b3",
+      "export_sha256": "dbcebf6a54c508264cd6dde1684913732a3d3beddac01c18785bc4e2682a0063"
+    },
+    "backend/mesa/air/air_metal.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_metal.c",
+      "source_sha256": "46e6d8c40255de656fdddbfc4fc103df032222a1c031106bd189f6be19296a4c",
+      "export_sha256": "f0e35287f3039b5572be73b578f80389bcd3468af6fe5dcc8f148a6fadb5c9da"
+    },
+    "backend/mesa/air/air_metal.h": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_metal.h",
+      "source_sha256": "c8e812a204c41c437132803167d40d0a0242dc27f7bc5774ca8096971704e951",
+      "export_sha256": "1190662f5e3514b1ee0fa5d6c78c237b2046cd8fac8085cab325a0b6f98bb481"
+    },
+    "backend/mesa/air/air_metallib.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_metallib.c",
+      "source_sha256": "49f4f8e38019cf0169955eca89537efffb9f2b5c6771d5ed4f9f0f10c07815a4",
+      "export_sha256": "934bea3f4f338ba8c727a85c9a4c3cbe070fb594695f704238fff1f352bbf4b7"
+    },
+    "backend/mesa/air/air_metal_test.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_metal_test.c",
+      "source_sha256": "fe11df1f72ec6fda4529b5cdb451637a8d45bc74c673d127e952b658b81db86e",
+      "export_sha256": "39b41a5997814581503e6335f72a4e3a98bb79c4c12225ac287ceb45fe1c9726"
+    },
+    "backend/mesa/air/air_module.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_module.c",
+      "source_sha256": "fb537e9a0f301e327a5c67d2b66d3fa8c7b2022c33f1fe9d7acc3f73b2c175f1",
+      "export_sha256": "7ffc9326fd22b85f309d0c4770c87649bf042aa234763a5f55d053b1ede6fae7"
+    },
+    "backend/mesa/air/air_module.h": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_module.h",
+      "source_sha256": "d16c17982938ed3bd7f99ea907023edd170a280685fc315a24ec5e29e39ddfd6",
+      "export_sha256": "829ed284d3f0c815aff38c08d8483b781e904ed5f5e36643076e3ae4554ffee2"
+    },
+    "backend/mesa/air/air_print.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_print.c",
+      "source_sha256": "01f5e96e5bbdfd73d43f7d28424ba7071a6956120f7bdd1051889628f8f5276a",
+      "export_sha256": "bf69217c8ffa6f1c68e837660a8a14a4ef683d68bb00e3b0a74ae54a37651f04"
+    },
+    "backend/mesa/air/air_private.h": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_private.h",
+      "source_sha256": "62df055e712ca3fbb22a45695e932bc2a822a17fcc5a68daaddc264f8556a18d",
+      "export_sha256": "db40ef89aef805e402a9eeb22a35efa93de7a47796601b1d3ed4cbeac6b075bc"
+    },
+    "backend/mesa/air/air_run.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_run.c",
+      "source_sha256": "50931a9bafb97c4f1c5679153f443ba9afdd65031165eaca0abe95e3fd6054f8",
+      "export_sha256": "15a02c4b1ef2a0618d1cb0028f6e933bcf8452451ba2fff80cb1d7f6a17316bb"
+    },
+    "backend/mesa/air/air_to_nir.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/air_to_nir.c",
+      "source_sha256": "d9c87409c9e48325aba0809e5fd6b87f18b3413c0394383d247a31d4281e45cc",
+      "export_sha256": "56b45563792db03700c275e3440260bf7e97720cbd69fbbf6337f9a698d160f4"
+    },
+    "backend/mesa/air/meson.build": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/meson.build",
+      "source_sha256": "af839fbf7da29c6c19928b1a7b8826325d6800dba00cf81dc95e8a3633c07cd0",
+      "export_sha256": "5f34a52018ca5cac4609f1c2ae6903867f813b526a68b0c54480005e3a9f973c"
+    },
+    "backend/mesa/air/nir_air.h": {
+      "source": "repos/hackios-lemonade/tools/mesa/air/nir_air.h",
+      "source_sha256": "86e34d48ed751ed8e7b286f055c6c49a45194168f76ae340ed09add67dec59dc",
+      "export_sha256": "e8e08782be84362b3f6247e3c62919976d8756ef2f4884b16ebedfdea3df5a80"
+    },
+    "backend/mesa/redwood-drm/redwood_drm.c": {
+      "source": "repos/hackios-lemonade/tools/mesa/redwood-drm/redwood_drm.c",
+      "source_sha256": "955ab01edec6b5f347deae5ce38d2554108fa1022a18ce6c53698e3cb72b33f2",
+      "export_sha256": "76ef9a9d3d222004306eee0c2c54043afeaa38bf16a7d108b0409ca1cf644f9f"
+    },
+    "backend/mesa/redwood-drm/xf86drm.h": {
+      "source": "repos/hackios-lemonade/tools/mesa/redwood-drm/xf86drm.h",
+      "source_sha256": "39166c3acd48c0abf63a7f84b341605052accbb1af38533f013a64fabb84c20d",
+      "export_sha256": "272f5285703bbe83e62748e4a3f8606c759eaf890a91e3ff7e6793c3ad894629"
+    },
+    "backend/mk-mesa.sh": {
+      "source": "repos/hackios-lemonade/tools/mk-mesa.sh",
+      "source_sha256": "18894343f16a7940ed4a1ca6ee1ce951db043424b0076966299c8c731cc98893",
+      "export_sha256": "6142c2fadca9cb18e55c375ff174c8ef5c148331a5c1aa4074137f55a50bb3c3"
+    },
+    "licenses/UPSTREAM-APSL-2.0.txt": {
+      "source": "repos/hackios-lemonade/LICENSE",
+      "source_sha256": "ce93889b3df4f6d0319aa1cc75b194dd633145fb0e20b581aa3dc2c37d8f79f5",
+      "export_sha256": "e5881019d8766c1e88a5fe1dbca4ba40c78011d41fcb18f6e9f50df60182685b"
+    }
+  },
+  "objects": {
+    "RedwoodGPU.o": {
+      "build_object_sha256": "f1f3e08240aee3d07e959dc58eae7c98d29eda42eddb731854cc1619ab8af65d",
+      "published_object_sha256": "fba0dce30f20e5c61a209081974d3ccd2c0356e54eb1336d75afaed118b65afe",
+      "debug_info_stripped": true
+    },
+    "MiniIOMobileFramebuffer.o": {
+      "build_object_sha256": "f131c5f9343de824d6f1d268511871c9d6f75198627e05491c46caf45dd750de",
+      "published_object_sha256": "eae6fa138ac29079229711ea73519161cb30c4e7c75e35d7155d7d99b1864456",
+      "debug_info_stripped": true
+    }
+  }
+}

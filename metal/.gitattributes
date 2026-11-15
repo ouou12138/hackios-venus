@@ -1,0 +1,6 @@
+* text eol=lf
+obj/*.o -text
+*.patch -whitespace
+*.diff -whitespace
+backend/** -whitespace
+licenses/** -whitespace

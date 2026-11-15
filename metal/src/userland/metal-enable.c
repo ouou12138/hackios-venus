@@ -1,0 +1,28 @@
+/* Enable the installed Metal plugin before launchd starts its clients. */
+#include <CoreFoundation/CoreFoundation.h>
+#include <IOKit/IOKitLib.h>
+#include <stdio.h>
+#include <unistd.h>
+extern kern_return_t set_properties(io_registry_entry_t, CFTypeRef)
+    __asm("_IORegistryEntrySetCFProperties");
+int main(void)
+{
+    io_service_t service = IOServiceGetMatchingService(0, IOServiceMatching("IOAcceleratorES"));
+    if (!service) return 1;
+    const void *keys[] = { CFSTR("MetalPluginName"), CFSTR("MetalPluginClassName") };
+    /* The complete stock System is read-only and has no custom bundle symlink.
+     * Metal constructs Extensions/<name>.bundle. Resolve the same runtime bundle
+     * through its relative path without altering the installed System image. */
+    if (access("/redwood/lib/RedwoodMetal.bundle/RedwoodMetal", R_OK)) return 1;
+    int standard = access("/System/Library/Extensions/RedwoodMetal.bundle/RedwoodMetal", R_OK) == 0;
+    CFStringRef plugin = standard ? CFSTR("RedwoodMetal") : CFSTR("../../../redwood/lib/RedwoodMetal");
+    const void *values[] = { plugin, CFSTR("RedwoodMetalDevice") };
+    printf("venus-metal-enable: native bundle path=%s\n", standard ? "System extension symlink" : "runtime relative alias");
+    CFDictionaryRef properties = CFDictionaryCreate(NULL, keys, values, 2,
+        &kCFTypeDictionaryKeyCallBacks, &kCFTypeDictionaryValueCallBacks);
+    kern_return_t result = properties ? set_properties(service, properties) : KERN_FAILURE;
+    if (properties) CFRelease(properties);
+    IOObjectRelease(service);
+    if (result) fprintf(stderr, "Metal startup failed: %#x\n", result);
+    return result != KERN_SUCCESS;
+}
